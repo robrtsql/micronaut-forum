@@ -1,0 +1,23 @@
+micronaut:
+  application:
+    name: forum
+datasources:
+  default:
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: changeme
+r2dbc:
+  datasources:
+    default:
+      schema-generate: NONE
+      dialect: POSTGRES
+      db-type: postgres
+      url: r2dbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: changeme
+flyway:
+  datasources:
+    default:
+      enabled: true
