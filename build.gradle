@@ -3,6 +3,7 @@ plugins {
     id("io.micronaut.application") version "4.4.2"
     id("io.micronaut.test-resources") version "4.4.2"
     id("io.micronaut.aot") version "4.4.2"
+    id("com.diffplug.spotless") version "7.0.0.BETA2"
 }
 
 version = "0.1"
@@ -28,6 +29,13 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
     runtimeOnly("org.yaml:snakeyaml")
+
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("io.micronaut:micronaut-http-client")
     testResourcesService("org.postgresql:postgresql")
 }
@@ -65,9 +73,16 @@ micronaut {
     }
 }
 
+spotless {
+    java {
+        googleJavaFormat()
+    }
+}
 
 tasks.named("dockerfileNative") {
     jdkVersion = "21"
 }
 
-
+test {
+    useJUnitPlatform()
+}

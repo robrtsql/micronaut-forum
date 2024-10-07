@@ -4,17 +4,16 @@ import io.micronaut.data.annotation.AutoPopulated;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.serde.annotation.Serdeable;
-import lombok.Data;
-
 import java.util.UUID;
+import lombok.Builder;
+import lombok.Data;
 
 @MappedEntity
 @Data
+@Builder
 @Serdeable
-public class Post {
-    @Id
-    @AutoPopulated
-    private UUID id;
+public class ForumPost {
+  @Id @AutoPopulated private UUID id;
 
-    private String body;
+  private String body;
 }
