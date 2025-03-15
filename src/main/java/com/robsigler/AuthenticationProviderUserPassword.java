@@ -12,13 +12,13 @@ import jakarta.inject.Singleton;
 @Singleton
 class AuthenticationProviderUserPassword<B> implements HttpRequestAuthenticationProvider<B> {
 
-  @Override
-  public AuthenticationResponse authenticate(
-      @Nullable HttpRequest<B> httpRequest,
-      @NonNull AuthenticationRequest<String, String> authenticationRequest) {
-    return authenticationRequest.getIdentity().equals("sherlock")
-            && authenticationRequest.getSecret().equals("password")
-        ? AuthenticationResponse.success(authenticationRequest.getIdentity())
-        : AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
-  }
+    @Override
+    public AuthenticationResponse authenticate(
+            @Nullable HttpRequest<B> httpRequest,
+            @NonNull AuthenticationRequest<String, String> authenticationRequest) {
+        return authenticationRequest.getIdentity().equals("sherlock")
+                        && authenticationRequest.getSecret().equals("password")
+                ? AuthenticationResponse.success(authenticationRequest.getIdentity())
+                : AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
+    }
 }

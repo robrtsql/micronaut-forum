@@ -10,19 +10,21 @@ import reactor.core.publisher.Flux;
 @MicronautTest(transactional = false)
 class ForumTest {
 
-  @Inject EmbeddedApplication<?> application;
+    @Inject
+    EmbeddedApplication<?> application;
 
-  @Inject private ForumPostRepository forumPostRepository;
+    @Inject
+    private ForumPostRepository forumPostRepository;
 
-  @Test
-  void testItWorks() {
-    Flux.from(forumPostRepository.save(ForumPost.builder().body("Hello World").build()))
-        .flatMap(x -> forumPostRepository.findAll())
-        .collectList()
-        .doOnNext(
-            list -> {
-              Assertions.assertEquals("Hello World", list.getFirst().getBody());
-            })
-        .block();
-  }
+    @Test
+    void testItWorks() {
+        Flux.from(forumPostRepository.save(
+                        ForumPost.builder().body("Hello World").build()))
+                .flatMap(x -> forumPostRepository.findAll())
+                .collectList()
+                .doOnNext(list -> {
+                    Assertions.assertEquals("Hello World", list.getFirst().getBody());
+                })
+                .block();
+    }
 }

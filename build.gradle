@@ -77,7 +77,7 @@ micronaut {
 
 spotless {
     java {
-        googleJavaFormat()
+        palantirJavaFormat().style("AOSP")
     }
 }
 

@@ -13,7 +13,9 @@ import lombok.Data;
 @Builder
 @Serdeable
 public class ForumPost {
-  @Id @AutoPopulated private UUID id;
+    @Id
+    @AutoPopulated
+    private UUID id;
 
-  private String body;
+    private String body;
 }

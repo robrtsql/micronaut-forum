@@ -13,15 +13,16 @@ import reactor.core.publisher.Mono;
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/posts")
 public class ForumPostController {
-  @Inject private ForumPostRepository postRepository;
+    @Inject
+    private ForumPostRepository postRepository;
 
-  @Get("/")
-  public Flux<ForumPost> list() {
-    return Flux.from(postRepository.findAll());
-  }
+    @Get("/")
+    public Flux<ForumPost> list() {
+        return Flux.from(postRepository.findAll());
+    }
 
-  @Post("/")
-  public Mono<Void> create(@Body ForumPost post) {
-    return Flux.from(postRepository.save(post)).then();
-  }
+    @Post("/")
+    public Mono<Void> create(@Body ForumPost post) {
+        return Flux.from(postRepository.save(post)).then();
+    }
 }

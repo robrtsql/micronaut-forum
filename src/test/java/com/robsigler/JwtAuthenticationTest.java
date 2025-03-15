@@ -25,42 +25,38 @@ import org.junit.jupiter.api.Test;
 @MicronautTest(transactional = false)
 class JwtAuthenticationTest {
 
-  @Inject
-  @Client("/")
-  HttpClient client;
+    @Inject
+    @Client("/")
+    HttpClient client;
 
-  @Test
-  void accessingASecuredUrlWithoutAuthenticatingReturnsUnauthorized() {
-    HttpClientResponseException e =
-        assertThrows(
-            HttpClientResponseException.class,
-            () -> {
-              client.toBlocking().exchange(HttpRequest.GET("/").accept(TEXT_PLAIN));
-            });
+    @Test
+    void accessingASecuredUrlWithoutAuthenticatingReturnsUnauthorized() {
+        HttpClientResponseException e = assertThrows(HttpClientResponseException.class, () -> {
+            client.toBlocking().exchange(HttpRequest.GET("/").accept(TEXT_PLAIN));
+        });
 
-    assertEquals(UNAUTHORIZED, e.getStatus());
-  }
+        assertEquals(UNAUTHORIZED, e.getStatus());
+    }
 
-  @Test
-  void uponSuccessfulAuthenticationAJsonWebTokenIsIssuedToTheUser() throws ParseException {
-    UsernamePasswordCredentials creds = new UsernamePasswordCredentials("sherlock", "password");
-    HttpRequest<?> request = HttpRequest.POST("/login", creds);
-    HttpResponse<BearerAccessRefreshToken> rsp =
-        client.toBlocking().exchange(request, BearerAccessRefreshToken.class);
-    assertEquals(OK, rsp.getStatus());
+    @Test
+    void uponSuccessfulAuthenticationAJsonWebTokenIsIssuedToTheUser() throws ParseException {
+        UsernamePasswordCredentials creds = new UsernamePasswordCredentials("sherlock", "password");
+        HttpRequest<?> request = HttpRequest.POST("/login", creds);
+        HttpResponse<BearerAccessRefreshToken> rsp =
+                client.toBlocking().exchange(request, BearerAccessRefreshToken.class);
+        assertEquals(OK, rsp.getStatus());
 
-    BearerAccessRefreshToken bearerAccessRefreshToken = rsp.body();
-    assertEquals("sherlock", bearerAccessRefreshToken.getUsername());
-    assertNotNull(bearerAccessRefreshToken.getAccessToken());
-    assertTrue(JWTParser.parse(bearerAccessRefreshToken.getAccessToken()) instanceof SignedJWT);
+        BearerAccessRefreshToken bearerAccessRefreshToken = rsp.body();
+        assertEquals("sherlock", bearerAccessRefreshToken.getUsername());
+        assertNotNull(bearerAccessRefreshToken.getAccessToken());
+        assertTrue(JWTParser.parse(bearerAccessRefreshToken.getAccessToken()) instanceof SignedJWT);
 
-    String accessToken = bearerAccessRefreshToken.getAccessToken();
-    HttpRequest<?> requestWithAuthorization =
-        HttpRequest.GET("/").accept(TEXT_PLAIN).bearerAuth(accessToken);
-    HttpResponse<String> response =
-        client.toBlocking().exchange(requestWithAuthorization, String.class);
+        String accessToken = bearerAccessRefreshToken.getAccessToken();
+        HttpRequest<?> requestWithAuthorization =
+                HttpRequest.GET("/").accept(TEXT_PLAIN).bearerAuth(accessToken);
+        HttpResponse<String> response = client.toBlocking().exchange(requestWithAuthorization, String.class);
 
-    assertEquals(OK, rsp.getStatus());
-    assertEquals("sherlock", response.body());
-  }
+        assertEquals(OK, rsp.getStatus());
+        assertEquals("sherlock", response.body());
+    }
 }

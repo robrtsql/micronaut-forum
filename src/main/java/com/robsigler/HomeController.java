@@ -12,9 +12,9 @@ import java.security.Principal;
 @Controller
 public class HomeController {
 
-  @Produces(MediaType.TEXT_PLAIN)
-  @Get
-  public String index(Principal principal) {
-    return principal.getName();
-  }
+    @Produces(MediaType.TEXT_PLAIN)
+    @Get
+    public String index(Principal principal) {
+        return principal.getName();
+    }
 }
