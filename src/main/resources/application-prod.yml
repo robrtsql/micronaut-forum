@@ -1,0 +1,32 @@
+micronaut:
+  application:
+    name: forum
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
+datasources:
+  default:
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+    url: jdbc:postgresql://${DATABASE_HOST}:5432/${DATABASE_NAME}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+r2dbc:
+  datasources:
+    default:
+      schema-generate: NONE
+      dialect: POSTGRES
+      db-type: postgres
+      url: r2dbc:postgresql://${DATABASE_HOST}:5432/${DATABASE_NAME}
+      username: ${DATABASE_USERNAME}
+      password: ${DATABASE_PASSWORD}
+flyway:
+  datasources:
+    default:
+      enabled: true
