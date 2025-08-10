@@ -4,9 +4,11 @@ import io.micronaut.data.annotation.AutoPopulated;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.serde.annotation.Serdeable;
-import java.util.UUID;
+
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.UUID;
 
 @MappedEntity
 @Data

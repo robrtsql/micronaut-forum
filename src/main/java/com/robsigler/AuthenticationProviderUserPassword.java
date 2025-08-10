@@ -7,6 +7,7 @@ import io.micronaut.security.authentication.AuthenticationFailureReason;
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
 import io.micronaut.security.authentication.provider.HttpRequestAuthenticationProvider;
+
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -19,6 +20,7 @@ class AuthenticationProviderUserPassword<B> implements HttpRequestAuthentication
         return authenticationRequest.getIdentity().equals("sherlock")
                         && authenticationRequest.getSecret().equals("password")
                 ? AuthenticationResponse.success(authenticationRequest.getIdentity())
-                : AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
+                : AuthenticationResponse.failure(
+                        AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
     }
 }
