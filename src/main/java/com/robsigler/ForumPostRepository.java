@@ -6,5 +6,5 @@ import io.micronaut.data.repository.reactive.ReactiveStreamsCrudRepository;
 
 import java.util.UUID;
 
-@R2dbcRepository(dialect = Dialect.POSTGRES)
+@R2dbcRepository(dialect = Dialect.POSTGRES, dataSource = "r2dbc")
 public interface ForumPostRepository extends ReactiveStreamsCrudRepository<ForumPost, UUID> {}

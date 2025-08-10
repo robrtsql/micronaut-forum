@@ -19,7 +19,7 @@ datasources:
     password: changeme
 r2dbc:
   datasources:
-    default:
+    r2dbc:
       schema-generate: NONE
       dialect: POSTGRES
       db-type: postgres
