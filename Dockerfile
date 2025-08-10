@@ -21,4 +21,4 @@ ARG BUILD_HOME
 ENV APP_HOME=$BUILD_HOME
 COPY --from=build-image $APP_HOME/build/libs/forum-0.1-all.jar app.jar
 
-ENTRYPOINT java -jar app.jar
+ENTRYPOINT java -jar app.jar -Dmicronaut.environments=$MICRONAUT_ENVIRONMENTS
